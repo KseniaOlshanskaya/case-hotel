@@ -54,7 +54,10 @@ class Choice(Room):
         return self.__str__()
 
     def status_change(self):
-        self.status = True
+        if self.status is False:
+            self.status = True
+        else:
+            self.status = False
         return self.status
 
     def choose(self, t, food_type):
