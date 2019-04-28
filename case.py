@@ -1,14 +1,16 @@
 from hotel import *
 
-variants_dict = {}
 price_list = {1: 2900, 2: 2300, 3: 3200, 4: 4100}
 comfort_list = {1: 1.0, 2: 1.2, 3: 1.5}
 food_dict = {1: 0.0, 2: 280.0, 3: 1000.0}
 big_list = []
+status_dict = {}
+counter = 0
 
 with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
     text = rooms.readlines()
     for i in text:
+        counter += 1
         room1 = i.split()
         number = room1[0]
         type_ = room1[1]
@@ -33,9 +35,16 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
                 big_list.append(room_list)
                 current_room.price -= food_dict[n]
             current_room.price /= t
-    big_list = sorted(big_list, key=lambda tup: tup[0])
+        status_dict[counter] = cur_room.status  # Это словарь статусов комнат, False - свободна, True - занята
+
+    big_list = sorted(big_list, key=lambda tup: tup[0], reverse=True)
     for i in big_list:
         print(i)
+    print(status_dict)
+
+    # Это когда работа с клиентами, чтоб менять статус номера:
+    # new_status = cur_room.status_change()
+    # status_dict.update({cur_room.number: new_status})
 
 
 
