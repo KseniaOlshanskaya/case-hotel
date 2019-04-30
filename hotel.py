@@ -1,3 +1,4 @@
+from random import randint
 class Room:
     def __init__(self, number, type_, human_quantity, comfort_degree, price=0):
         self.number = number
@@ -53,9 +54,9 @@ class Choice(Room):
     def __repr__(self):
         return self.__str__()
 
-    def status_change(self):
+    def status_change(self, a = False, b = False):
         if self.status is False:
-            self.status = True
+            self.status = [a, b]
         else:
             self.status = False
         return self.status
@@ -71,7 +72,7 @@ class Choice(Room):
         return self.price
 
 class Hotel:
-    pass    # Класс занятости номеров
+    pass
 
 class Visitor:
     def __init__(self, book, guest_name, guest_name2, guest_name3, how_much,
@@ -102,3 +103,13 @@ class Visitor:
     def count_price(self):
         self.max_price_for_all = self.max_price * self.how_much
         return self.max_price_for_all
+
+
+def answer():
+    a = randint(1, 4)
+    if a == 1:
+        print('Клиент отказался от бронирования. \n')
+        return 0
+    else:
+        print('Клиент согласен. Номер забронирован. \n')
+        return 1
