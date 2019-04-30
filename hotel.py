@@ -72,21 +72,35 @@ class Choice(Room):
         return self.price
 
 
-class Hotel:
+class Hotel(Room):
     def __init__(self, income, missed_income):
         self.busy = 0
         self.free = 0
         self.load_percentage = 0
+        self.percentage1 = 0
+        self.percentage2 = 0
+        self.percentage3 = 0
+        self.percentage4 = 0
         self.income = income
         self.missed_income = missed_income
 
     def __str__(self):
-        pass
+        s = "Количество занятых номеров: " + str(self.busy) + "\n"
+        s += "Количество свободных номеров: " + str(self.free) + "\n"
+        s += "Занятость по категориям:\n"
+        s += "Одноместных: " + str(self.percentage1) + "\n"
+        s += "Двухместных: : " + str(self.percentage2) + "\n"
+        s += "Полулюкс: " + str(self.percentage3) + "\n"
+        s += "Люкс: : " + str(self.percentage4) + "\n"
+        s += "Процент загруженности гостинницы: " + str(self.load_percentage) + "\n"
+        s += "Доход за день: " + str(self.income) + "\n"
+        s += "Упущенный доход: " + str(self.missed_income) + "\n"
+        return s
 
     def __repr__(self):
         return self.__str__()
 
-    def busy(self, status_dict, b):
+    def busy_(self, status_dict, b):
         busy_rooms = []
         for i in status_dict:
             if status_dict[i] is not False:
@@ -102,14 +116,27 @@ class Hotel:
                     busy_rooms.append(i)
             else:
                 self.free += 1
-        return self.free, self.busy
+        return busy_rooms
 
     def percentage(self, text):
-        self.load_percentage = (100 * self.busy) / len(text)
+        self.load_percentage = round((100 * self.busy) / len(text), 2)
         return self.load_percentage
 
-    #def categories(self, status_dict, ):
-
+    def categories(self, busy_rooms_list, list_):
+        for i in busy_rooms_list:
+            for d in list_:
+                if i == d.number:
+                    if d.type_ == "одноместный":
+                        self.percentage1 += 1
+                    elif d.type_ == "двухместный":
+                        self.percentage2 += 1
+                    elif d.type_ == "полулюкс":
+                        self.percentage3 += 1
+                    else:
+                        self.percentage4 += 1
+                else:
+                    pass
+        return
 
 
 class Visitor:
