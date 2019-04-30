@@ -38,9 +38,9 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
         status_dict[counter] = cur_room.status  # Это словарь статусов комнат, False - свободна, True - занята
 
     big_list = sorted(big_list, key=lambda tup: tup[0], reverse=True)
-    for i in big_list:
-        print(i)
-    print(status_dict)
+    #for i in big_list:
+       # print(i)
+    #print(status_dict)
 
     # Это когда работа с клиентами, чтоб менять статус номера:
     # new_status = cur_room.status_change()
@@ -51,45 +51,35 @@ list_visitor = []
 with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
     text = rooms.readlines()
     for i in text:
-        visitor = []
+        visitor_list = []
         guest1 = i.split()
-        book = guest1[0]
-        name = guest1[1:4]
+
+        book = guest1[0], guest_name = guest1[1], guest_name2 = guest1[2]
+        guest_name3 = guest1[3]
         how_much = int(guest1[4])
         date_in = guest1[5]
         how_long = int(guest1[6])
-        max_price = guest1[7:]
-        name = str(name)
-        name = name.replace("[", "")
-        name = name.replace("]", "")
-        name = name.replace("'", "")
-        name = name.replace(",", "")
-        max_price = str(max_price)
-        max_price = max_price.replace("[", "")
-        max_price = max_price.replace("]", "")
-        max_price = max_price.replace("'", "")
-        max_price = max_price.replace(",", "")
-        max_price = int(max_price)
-        day = date_in[0:2]
-        day = int(day)
+        max_price = int(guest1[7])
+
+        day = int(date_in[0:2])
         day = day + how_long
         day = str(day)
-        day_len = len(day)
-        if day_len == 1:
+        if len(day) == 1:
             a = "0"
             a += day
             day = a
         else:
             pass
         day_out = date_in.replace(date_in[0:2], day)
-        visitor.append(book)
-        visitor.append(name)
-        visitor.append(how_much)
-        visitor.append(date_in)
-        visitor.append(how_long)
-        visitor.append(max_price)
-        visitor.append(day_out)
+
+        visitor = Visitor(book, guest_name, guest_name2, guest_name3, how_much,
+                          date_in, how_long, max_price, day_out)
+        visitor.count_price()
+        visitor_list.append(visitor)
+
+
+
         list_visitor.append(visitor)
 
-for i in list_visitor:
-    print(i)
+#for i in list_visitor:
+    #print(i)
