@@ -79,33 +79,37 @@ class Hotel:
         self.load_percentage = 0
         self.income = income
         self.missed_income = missed_income
-        
+
     def __str__(self):
         pass
-    
+
     def __repr__(self):
         return self.__str__()
-    
+
     def busy(self, status_dict, b):
+        busy_rooms = []
         for i in status_dict:
             if status_dict[i] is not False:
                 a = status_dict[i]
                 c = int((a[0])[:2])
                 d = int((a[1])[:2])
                 if c > int(b[:2]):
-                    self.busy += 1
-                elif b > d:
-                    self.busy += 1
-                else:
                     self.free += 1
-        return  
-    
+                elif int(b[:2]) > d:
+                    self.free += 1
+                else:
+                    self.busy += 1
+                    busy_rooms.append(i)
+            else:
+                self.free += 1
+        return self.free, self.busy
+
     def percentage(self, text):
         self.load_percentage = (100 * self.busy) / len(text)
         return self.load_percentage
-    
-    def categories(self, status_dict, text):
-        pass
+
+    #def categories(self, status_dict, ):
+
 
 
 class Visitor:
