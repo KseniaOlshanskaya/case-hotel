@@ -47,6 +47,49 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
     # status_dict.update({cur_room.number: new_status})
 
 
+list_visitor = []
+with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
+    text = rooms.readlines()
+    for i in text:
+        visitor = []
+        guest1 = i.split()
+        book = guest1[0]
+        name = guest1[1:4]
+        how_much = int(guest1[4])
+        date_in = guest1[5]
+        how_long = int(guest1[6])
+        max_price = guest1[7:]
+        name = str(name)
+        name = name.replace("[", "")
+        name = name.replace("]", "")
+        name = name.replace("'", "")
+        name = name.replace(",", "")
+        max_price = str(max_price)
+        max_price = max_price.replace("[", "")
+        max_price = max_price.replace("]", "")
+        max_price = max_price.replace("'", "")
+        max_price = max_price.replace(",", "")
+        max_price = int(max_price)
+        day = date_in[0:2]
+        day = int(day)
+        day = day + how_long
+        day = str(day)
+        day_len = len(day)
+        if day_len == 1:
+            a = "0"
+            a += day
+            day = a
+        else:
+            pass
+        day_out = date_in.replace(date_in[0:2], day)
+        visitor.append(book)
+        visitor.append(name)
+        visitor.append(how_much)
+        visitor.append(date_in)
+        visitor.append(how_long)
+        visitor.append(max_price)
+        visitor.append(day_out)
+        list_visitor.append(visitor)
 
-
-
+for i in list_visitor:
+    print(i)
