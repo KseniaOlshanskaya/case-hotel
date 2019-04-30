@@ -6,7 +6,7 @@ food_dict = {1: 0.0, 2: 280.0, 3: 1000.0}
 big_list = []
 status_dict = {}
 counter = 0
-
+list_ = []
 
 with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
     text = rooms.readlines()
@@ -18,6 +18,7 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
         human_quantity = room1[2]
         comfort_degree = room1[3]
         current_room = Choice(number, type_, human_quantity, comfort_degree)
+        list_.append(current_room)
         current_room.count_price(price_list, comfort_list)
 
         for t in range(1, int(current_room.human_quantity)+1):
@@ -76,14 +77,17 @@ with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
 day1 = int(visitor_list[0].date_in[:2])
 income = 0
 missed_income = 0
-b = ''
+
 for i in visitor_list:
     if int(i.book[:2]) != day1:
-        print('--------' * 100, '\n')
-        print('Итог за', l, ': \n')
-        print('Доход за день: ', income, '\n')
-        print('Упущенный доход: ', missed_income, '\n')
-        print('--------' * 100, '\n')
+        hotel = Hotel(round(income, 2), round(missed_income, 2))
+        busy_rooms_list = hotel.busy_(status_dict, b)
+        hotel.percentage(list_)
+        hotel.categories(busy_rooms_list, list_)
+        print("------" * 100)
+        print("Итог за " + b)
+        print(hotel)
+        print("------" * 100)
         income = 0
         missed_income = 0
     print('Поступила заявка на бронирование:\n')
@@ -144,10 +148,15 @@ for i in visitor_list:
     if counter == 0:
         print('Предложений по данному запросу нет. В бронировании отказано. \n')
         missed_income += i.max_price_for_all
-    l = i.book
+    b = i.book
     day1 = int(i.book[:2])
-print('--------'* 100, '\n')
-print('Итог за', l, ': \n')
-print('Доход за день: ', income, '\n')
-print('Упущенный доход: ', missed_income, '\n')
-print('--------' * 100, '\n')
+hotel = Hotel(round(income, 2), round(missed_income, 2))
+busy_rooms_list = hotel.busy_(status_dict, b)
+hotel.percentage(list_)
+hotel.categories(busy_rooms_list, list_)
+print("------" * 100)
+print("Итог за " + b)
+print(hotel)
+print("------" * 100)
+income = 0
+missed_income = 0
