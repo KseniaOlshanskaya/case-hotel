@@ -76,10 +76,11 @@ with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
 day1 = int(visitor_list[0].date_in[:2])
 income = 0
 missed_income = 0
+b = ''
 for i in visitor_list:
     if int(i.book[:2]) != day1:
-        print('--------'* 100, '\n')
-        print('Итог за', b, ': \n')
+        print('--------' * 100, '\n')
+        print('Итог за', l, ': \n')
         print('Доход за день: ', income, '\n')
         print('Упущенный доход: ', missed_income, '\n')
         print('--------' * 100, '\n')
@@ -100,7 +101,7 @@ for i in visitor_list:
                     print(j[1], '\n')
                     a = answer()
                     new_status = j[1].status_change(i.date_in, i.day_out)
-                    status_dict.update({j[1].number: new_status})
+                    status_dict.update({int(j[1].number): new_status})
                     counter += 1
                     if a == 0:
                         missed_income += j[1].price
@@ -117,7 +118,7 @@ for i in visitor_list:
                         print(j[1], '\n')
                         a = answer()
                         new_status = j[1].status_change(i.date_in, j[1].status[1])
-                        status_dict.update({j[1].number: new_status})
+                        status_dict.update({int(j[1].number): new_status})
                         counter += 1
                         if a == 0:
                             missed_income += j[1].price
@@ -129,22 +130,24 @@ for i in visitor_list:
                         print(j[1], '\n')
                         a = answer()
                         new_status = j[1].status_change(j[1].status[0], i.day_out)
-                        status_dict.update({j[1].number: new_status})
+                        status_dict.update({int(j[1].number): new_status})
                         counter += 1
                         if a == 0:
                             missed_income += j[1].price
                         elif a == 1:
                             income += j[1].price
+
                         break
                     else:
                         pass
+
     if counter == 0:
         print('Предложений по данному запросу нет. В бронировании отказано. \n')
         missed_income += i.max_price_for_all
-    b = i.book
+    l = i.book
     day1 = int(i.book[:2])
 print('--------'* 100, '\n')
-print('Итог за', b, ': \n')
+print('Итог за', l, ': \n')
 print('Доход за день: ', income, '\n')
 print('Упущенный доход: ', missed_income, '\n')
 print('--------' * 100, '\n')
