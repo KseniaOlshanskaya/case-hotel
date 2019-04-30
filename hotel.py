@@ -71,8 +71,42 @@ class Choice(Room):
         self.price = round(self.price, 2)
         return self.price
 
+
 class Hotel:
-    pass
+    def __init__(self, income, missed_income):
+        self.busy = 0
+        self.free = 0
+        self.load_percentage = 0
+        self.income = income
+        self.missed_income = missed_income
+        
+    def __str__(self):
+        pass
+    
+    def __repr__(self):
+        return self.__str__()
+    
+    def busy(self, status_dict, b):
+        for i in status_dict:
+            if status_dict[i] is not False:
+                a = status_dict[i]
+                c = int((a[0])[:2])
+                d = int((a[1])[:2])
+                if c > int(b[:2]):
+                    self.busy += 1
+                elif b > d:
+                    self.busy += 1
+                else:
+                    self.free += 1
+        return  
+    
+    def percentage(self, text):
+        self.load_percentage = (100 * self.busy) / len(text)
+        return self.load_percentage
+    
+    def categories(self, status_dict, text):
+        pass
+
 
 class Visitor:
     def __init__(self, book, guest_name, guest_name2, guest_name3, how_much,
