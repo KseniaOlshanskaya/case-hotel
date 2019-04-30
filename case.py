@@ -46,15 +46,16 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
     # new_status = cur_room.status_change()
     # status_dict.update({cur_room.number: new_status})
 
-
-list_visitor = []
+visitor_list = []
 with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
     text = rooms.readlines()
     for i in text:
-        visitor_list = []
+
         guest1 = i.split()
 
-        book = guest1[0], guest_name = guest1[1], guest_name2 = guest1[2]
+        book = guest1[0]
+        guest_name = guest1[1]
+        guest_name2 = guest1[2]
         guest_name3 = guest1[3]
         how_much = int(guest1[4])
         date_in = guest1[5]
@@ -76,10 +77,7 @@ with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
                           date_in, how_long, max_price, day_out)
         visitor.count_price()
         visitor_list.append(visitor)
-
-
-
-        list_visitor.append(visitor)
+    print(visitor_list)
 
 #for i in list_visitor:
     #print(i)
