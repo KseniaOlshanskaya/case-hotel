@@ -40,7 +40,11 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
         status_dict[counter] = cur_room.status  # Это словарь статусов комнат, False - свободна, True - занята
 
     big_list = sorted(big_list, key=lambda tup: tup[0], reverse=True)
-
+    dict_ = {}
+    counter12 = 1
+    for t in list_:
+        dict_.update({counter12: t.type_})
+        counter12 += 1
 
 visitor_list = []
 with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
@@ -83,15 +87,16 @@ for i in visitor_list:
         hotel = Hotel(round(income, 2), round(missed_income, 2))
         busy_rooms_list = hotel.busy_(status_dict, b)
         hotel.percentage(list_)
-        hotel.categories(busy_rooms_list, list_)
+        hotel.categories(busy_rooms_list, dict_)
         print("------" * 100)
         print("Итог за " + b)
         print(hotel)
         print("------" * 100)
         income = 0
         missed_income = 0
-    print('Поступила заявка на бронирование:\n')
-    print(i, '\n')
+    #print("..."*100)
+    print('Поступила заявка на бронирование:')
+    print(i)
     counter = 0
     for j in big_list:
         if j[1].price > i.max_price_for_all:
@@ -101,8 +106,8 @@ for i in visitor_list:
                 pass
             else:
                 if j[1].status is False:
-                    print('Найден: \n')
-                    print(j[1], '\n')
+                    print('Найден:')
+                    print(j[1])
                     a = answer()
                     new_status = j[1].status_change(i.date_in, i.day_out)
                     status_dict.update({int(j[1].number): new_status})
@@ -118,8 +123,8 @@ for i in visitor_list:
                     c = int(i.date_in[0:2])
                     d = int(i.day_out[0:2])
                     if d < a:
-                        print('Найден: \n')
-                        print(j[1], '\n')
+                        print('Найден:')
+                        print(j[1])
                         a = answer()
                         new_status = j[1].status_change(i.date_in, j[1].status[1])
                         status_dict.update({int(j[1].number): new_status})
@@ -130,8 +135,8 @@ for i in visitor_list:
                             income += j[1].price
                         break
                     elif b < c:
-                        print('Найден: \n')
-                        print(j[1], '\n')
+                        print('Найден:')
+                        print(j[1])
                         a = answer()
                         new_status = j[1].status_change(j[1].status[0], i.day_out)
                         status_dict.update({int(j[1].number): new_status})
@@ -153,7 +158,7 @@ for i in visitor_list:
 hotel = Hotel(round(income, 2), round(missed_income, 2))
 busy_rooms_list = hotel.busy_(status_dict, b)
 hotel.percentage(list_)
-hotel.categories(busy_rooms_list, list_)
+hotel.categories(busy_rooms_list, dict_)
 print("------" * 100)
 print("Итог за " + b)
 print(hotel)
