@@ -72,3 +72,33 @@ class Choice(Room):
 
 class Hotel:
     pass    # Класс занятости номеров
+
+class Visitor:
+    def __init__(self, book, guest_name, guest_name2, guest_name3, how_much,
+                date_in, how_long, max_price, day_out):
+        self.book = book
+        self.guest_name = guest_name
+        self.guest_name2 = guest_name2
+        self.guest_name3 = guest_name3
+        self.how_much = how_much
+        self.date_in = date_in
+        self.how_long = how_long
+        self.max_price = max_price
+        self.day_out = day_out
+        self.max_price_for_all = 0
+
+    def __str__(self):
+        s = self.book + " "
+        s += self.guest_name + " " + self.guest_name2 + " " + self.guest_name3 + " "
+        s += str(self.how_much) + " "
+        s += self.date_in + " "
+        s += str(self.how_long) + " "
+        s += str(self.max_price)
+        return s
+
+    def __repr__(self):
+        return self.__str__()
+
+    def count_price(self):
+        self.max_price_for_all = self.max_price * self.how_much
+        return self.max_price_for_all
