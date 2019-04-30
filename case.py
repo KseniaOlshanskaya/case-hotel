@@ -7,6 +7,7 @@ big_list = []
 status_dict = {}
 counter = 0
 
+
 with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
     text = rooms.readlines()
     for i in text:
@@ -38,13 +39,7 @@ with open("fund.txt", "r", encoding="UTF-8-sig") as rooms:
         status_dict[counter] = cur_room.status  # Это словарь статусов комнат, False - свободна, True - занята
 
     big_list = sorted(big_list, key=lambda tup: tup[0], reverse=True)
-    #for i in big_list:
-       # print(i)
-    #print(status_dict)
 
-    # Это когда работа с клиентами, чтоб менять статус номера:
-    # new_status = cur_room.status_change()
-    # status_dict.update({cur_room.number: new_status})
 
 visitor_list = []
 with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
@@ -77,7 +72,79 @@ with open("booking.txt", "r", encoding="UTF-8-sig") as rooms:
                           date_in, how_long, max_price, day_out)
         visitor.count_price()
         visitor_list.append(visitor)
-    print(visitor_list)
 
-#for i in list_visitor:
-    #print(i)
+day1 = int(visitor_list[0].date_in[:2])
+income = 0
+missed_income = 0
+for i in visitor_list:
+    if int(i.book[:2]) != day1:
+        print('--------'* 100, '\n')
+        print('Итог за', b, ': \n')
+        print('Доход за день: ', income, '\n')
+        print('Упущенный доход: ', missed_income, '\n')
+        print('--------' * 100, '\n')
+        income = 0
+        missed_income = 0
+    print('Поступила заявка на бронирование:\n')
+    print(i, '\n')
+    counter = 0
+    for j in big_list:
+        if j[1].price > i.max_price_for_all:
+            pass
+        else:
+            if j[1].human_fact != i.how_much:
+                pass
+            else:
+                if j[1].status is False:
+                    print('Найден: \n')
+                    print(j[1], '\n')
+                    a = answer()
+                    new_status = j[1].status_change(i.date_in, i.day_out)
+                    status_dict.update({j[1].number: new_status})
+                    counter += 1
+                    if a == 0:
+                        missed_income += j[1].price
+                    elif a == 1:
+                        income += j[1].price
+                    break
+                else:
+                    a = int((j[1].status[0])[:2])
+                    b = int((j[1].status[1])[:2])
+                    c = int(i.date_in[0:2])
+                    d = int(i.day_out[0:2])
+                    if d < a:
+                        print('Найден: \n')
+                        print(j[1], '\n')
+                        a = answer()
+                        new_status = j[1].status_change(i.date_in, j[1].status[1])
+                        status_dict.update({j[1].number: new_status})
+                        counter += 1
+                        if a == 0:
+                            missed_income += j[1].price
+                        elif a == 1:
+                            income += j[1].price
+                        break
+                    elif b < c:
+                        print('Найден: \n')
+                        print(j[1], '\n')
+                        a = answer()
+                        new_status = j[1].status_change(j[1].status[0], i.day_out)
+                        status_dict.update({j[1].number: new_status})
+                        counter += 1
+                        if a == 0:
+                            missed_income += j[1].price
+                        elif a == 1:
+                            income += j[1].price
+                        break
+                    else:
+                        pass
+    if counter == 0:
+        print('Предложений по данному запросу нет. В бронировании отказано. \n')
+        missed_income += i.max_price_for_all
+    b = i.book
+    day1 = int(i.book[:2])
+print('--------'* 100, '\n')
+print('Итог за', b, ': \n')
+print('Доход за день: ', income, '\n')
+print('Упущенный доход: ', missed_income, '\n')
+print('--------' * 100, '\n')
