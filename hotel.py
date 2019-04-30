@@ -1,4 +1,6 @@
 from random import randint
+
+
 class Room:
     def __init__(self, number, type_, human_quantity, comfort_degree, price=0):
         self.number = number
@@ -72,7 +74,7 @@ class Choice(Room):
         return self.price
 
 
-class Hotel(Room):
+class Hotel:
     def __init__(self, income, missed_income):
         self.busy = 0
         self.free = 0
@@ -122,21 +124,16 @@ class Hotel(Room):
         self.load_percentage = round((100 * self.busy) / len(text), 2)
         return self.load_percentage
 
-    def categories(self, busy_rooms_list, list_):
+    def categories(self, busy_rooms_list, dict_):
         for i in busy_rooms_list:
-            for d in list_:
-                if i == d.number:
-                    if d.type_ == "одноместный":
-                        self.percentage1 += 1
-                    elif d.type_ == "двухместный":
-                        self.percentage2 += 1
-                    elif d.type_ == "полулюкс":
-                        self.percentage3 += 1
-                    else:
-                        self.percentage4 += 1
-                else:
-                    pass
-        return
+            if dict_[i] == "одноместный":
+                self.percentage1 += 1
+            elif dict_[i] == "двухместный":
+                self.percentage2 += 1
+            elif dict_[i] == "полулюкс":
+                self.percentage3 += 1
+            else:
+                self.percentage4 += 1
 
 
 class Visitor:
@@ -174,7 +171,9 @@ def answer():
     a = randint(1, 4)
     if a == 1:
         print('Клиент отказался от бронирования. \n')
+        print("..." * 100)
         return 0
     else:
         print('Клиент согласен. Номер забронирован. \n')
+        print("..." * 100)
         return 1
